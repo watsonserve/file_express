@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QLayout>
 #include <QStatusBar>
+#include "QSplitter"
 #include "api_signal.hpp"
 #include "MenuBar.hpp"
 #include "ToolBar.hpp"
@@ -21,6 +22,7 @@ class MainWindow : public QMainWindow
 
     QVBoxLayout *mainLayout;
     MenuBar *menuBar;
+    QSplitter *splitter;
     ToolBar *toolBar;
     QStatusBar *statusBar;
     QWidget *content;

@@ -1,9 +1,9 @@
 #ifndef SIDEPANEL_HPP
 #define SIDEPANEL_HPP
 
-#include <QToolBar>
+#include <QWidget>
 
-class SidePanel : public QToolBar
+class SidePanel : public QWidget
 {
     Q_OBJECT
 public:

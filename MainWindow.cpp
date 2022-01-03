@@ -4,8 +4,9 @@
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
 {
     menuBar = new MenuBar(this);
-    aside = new SidePanel(this);
     statusBar = new QStatusBar(this);
+    splitter = new QSplitter(this);
+    aside = new SidePanel(this);
     content = new QWidget(this);
     mainLayout = new QVBoxLayout(content);
     toolBar = new ToolBar(content);
@@ -18,16 +19,21 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     setMenuBar(menuBar);
     connect(menuBar, SIGNAL(click(ApiSignal)), this, SLOT(api(ApiSignal)));
 
-//    // 工具栏面板
-    addToolBar(Qt::ToolBarArea::LeftToolBarArea, aside);
+    // 工具栏面板
+//    addToolBar(Qt::ToolBarArea::LeftToolBarArea, aside);
 
 //    // 状态栏
     setStatusBar(statusBar);
 
+    // 主内容区
+    setCentralWidget(splitter);
+    splitter->addWidget(aside);
+    splitter->addWidget(content);
+
+    content->setLayout(mainLayout);
+
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
-    setCentralWidget(content);
-    content->setLayout(mainLayout);
     mainLayout->addWidget(toolBar);
     mainLayout->addWidget(tabFrame);
 
