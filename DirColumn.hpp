@@ -1,11 +1,15 @@
 #ifndef DIRCOLUMN_HPP
 #define DIRCOLUMN_HPP
 
-#include <QAbstractItemView>
+#include <QMouseEvent>
+#include <QListView>
+#include <QItemSelectionModel>
 
-class DirColumn : public QAbstractItemView
+class DirColumn : public QListView
 {
     Q_OBJECT
+protected:
+    void mouseReleaseEvent(QMouseEvent *event) override;
 public:
     explicit DirColumn(QWidget *parent = nullptr);
 

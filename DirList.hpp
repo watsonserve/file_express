@@ -5,10 +5,12 @@
 #include <QStandardPaths>
 #include <QListView>
 #include <QModelIndex>
+#include <QMouseEvent>
 #include "api_signal.hpp"
 #include "DirModel.hpp"
 #include "ContextMenu.hpp"
 #include "Preview.hpp"
+#include "DirColumn.hpp"
 
 template<typename T>
 int find(T &dst, QList<T> &pool)
@@ -38,18 +40,19 @@ class DirList : public QColumnView
     Preview *previewer;
     QItemSelectionModel *itemSelectionModel;
 
-    bool event(QEvent *ev);
-
 private slots:
     void previewUpdated(QModelIndex);
     void ctxMenu(QPoint);
     void api(enum ApiSignal, QModelIndex &);
     void open(QModelIndex);
     void handleSelection(const QItemSelection &, const QItemSelection &);
+protected:
+    QAbstractItemView *createColumn(const QModelIndex &) override;
+    bool event(QEvent *ev) override;
 public:
     explicit DirList(QWidget *parent = nullptr);
     virtual ~DirList();
-    virtual QModelIndexList selectedIndexes() const;
+    virtual QModelIndexList selectedIndexes() const override;
 
 signals:
 

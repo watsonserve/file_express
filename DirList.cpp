@@ -151,6 +151,19 @@ void DirList::ctxMenu(QPoint pos)
     contextMenu->popup(valid, mapToGlobal(pos), idx);
 }
 
+QAbstractItemView * DirList::createColumn(const QModelIndex &index)
+{
+    DirColumn *view = new DirColumn(viewport());
+
+    initializeColumn(view);
+
+    view->setRootIndex(index);
+    if (model()->canFetchMore(index))
+        model()->fetchMore(index);
+
+    return view;
+}
+
 DirList::~DirList()
 {
     delete contextMenu;
