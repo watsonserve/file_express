@@ -26,7 +26,7 @@ QList<T> uniq(QList<T> &src)
     QList<T> ret;
     for (int i = 0; i < src.length(); i++)
     {
-        if (-1 == ::find<QModelIndex>(src[i], ret)) ret.push_back(src[i]);
+        if (-1 == ::find<T>(src[i], ret)) ret.push_back(src[i]);
     }
     return ret;
 }

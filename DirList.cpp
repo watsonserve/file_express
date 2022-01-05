@@ -45,7 +45,7 @@ DirList::DirList(QWidget *parent) : QColumnView(parent)
 //    void currentRowChanged   (const QModelIndex &current, const QModelIndex &previous);
 //    void currentColumnChanged(const QModelIndex &current, const QModelIndex &previous);
     connect(itemSelectionModel, SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(handleSelection(const QItemSelection &, const QItemSelection &)));
-    connect(itemSelectionModel, SIGNAL(currentColumnChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(handleChange(const QModelIndex &, const QModelIndex &)));
+//    connect(itemSelectionModel, SIGNAL(currentColumnChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(handleChange(const QModelIndex &, const QModelIndex &)));
 }
 
 bool DirList::event(QEvent *ev)
@@ -57,29 +57,42 @@ bool DirList::event(QEvent *ev)
 void DirList::handleSelection(const QItemSelection &selected, const QItemSelection &deselected)
 {
     QList<QModelIndex> addList, subList;
+    QList<std::string> adds, subs;
+
     for (int i = 0; i < selected.length(); i++)
     {
         addList += selected[i].indexes();
     }
-    addList = uniq<QModelIndex>(addList);
 
     for (int i = 0; i < deselected.length(); i++)
     {
         subList += deselected[i].indexes();
     }
-    subList = uniq<QModelIndex>(subList);
 
-    std::cout << "+: ";
     for (int i = 0; i < addList.length(); i++)
     {
-        std::cout << dirModel->filePath(addList[i]).toStdString() << " ";
+        std::string filePath = dirModel->filePath(addList[i]).toStdString();
+        if (-1 == ::find<std::string>(filePath, adds))
+            adds.push_back(filePath);
+    }
+
+    for (int i = 0; i < subList.length(); i++)
+    {
+        std::string filePath = dirModel->filePath(subList[i]).toStdString();
+        if (-1 == ::find<std::string>(filePath, subs))
+            subs.push_back(filePath);
+    }
+    std::cout << "+: ";
+    for (int i = 0; i < adds.length(); i++)
+    {
+        std::cout << adds[i] << " ";
     }
     std::cout << std::endl;
 
     std::cout << "-: ";
-    for (int i = 0; i < subList.length(); i++)
+    for (int i = 0; i < subs.length(); i++)
     {
-        std::cout << dirModel->filePath(subList[i]).toStdString() << " ";
+        std::cout << subs[i] << " ";
     }
     std::cout << std::endl;
 }
