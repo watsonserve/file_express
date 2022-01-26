@@ -1,15 +1,14 @@
 #ifndef TOOLBAR_HPP
 #define TOOLBAR_HPP
 
-#include <QWidget>
+#include <QToolBar>
 #include <QPushButton>
 #include "AddressInput.hpp"
 
-class ToolBar : public QWidget
+class ToolBar : public QToolBar
 {
     Q_OBJECT
 
-    QHBoxLayout *h_layout;
     QPushButton *back;
     QPushButton *forward;
     AddressInput *input;

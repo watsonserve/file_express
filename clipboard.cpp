@@ -7,5 +7,5 @@ ClipBoard::ClipBoard(QObject *parent) : QObject(parent)
 
 ClipBoard::~ClipBoard()
 {
-    delete clip;
+//    delete clip;
 }

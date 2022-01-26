@@ -4,6 +4,7 @@
 #include <QMouseEvent>
 #include <QListView>
 #include <QItemSelectionModel>
+#include "DirModel.hpp"
 
 class DirColumn : public QListView
 {

@@ -46,6 +46,7 @@ private slots:
     void api(enum ApiSignal, QModelIndex &);
     void open(QModelIndex);
     void handleSelection(const QItemSelection &, const QItemSelection &);
+    void handleChange(const QModelIndex &, const QModelIndex &);
 protected:
     QAbstractItemView *createColumn(const QModelIndex &) override;
     bool event(QEvent *ev) override;

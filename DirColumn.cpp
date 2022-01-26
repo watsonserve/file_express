@@ -11,10 +11,8 @@ void DirColumn::mouseReleaseEvent(QMouseEvent *event)
     QModelIndex index = indexAt(pos);
     bool isEditing = state() == EditingState;
     QAbstractItemView::mouseReleaseEvent(event);
-    std::cout << "mouseReleaseEvent\n";
 
     if (isEditing || index.isValid()) return;
-    index = this->rootIndex();
-    QItemSelectionModel *model = selectionModel();
-    model->select(index, QItemSelectionModel::SelectCurrent);
+
+    emit clicked(this->rootIndex());
 }

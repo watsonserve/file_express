@@ -8,7 +8,6 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     splitter = new QSplitter(this);
     aside = new SidePanel(this);
     content = new QWidget(this);
-    mainLayout = new QVBoxLayout(content);
     toolBar = new ToolBar(content);
     tabFrame = new TabFrame(content);
     setBaseSize(800, 600);
@@ -20,22 +19,19 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent)
     connect(menuBar, SIGNAL(click(ApiSignal)), this, SLOT(api(ApiSignal)));
 
     // 工具栏面板
-//    addToolBar(Qt::ToolBarArea::LeftToolBarArea, aside);
+    addToolBar(Qt::ToolBarArea::TopToolBarArea, toolBar);
 
-//    // 状态栏
+    // 状态栏
     setStatusBar(statusBar);
 
     // 主内容区
     setCentralWidget(splitter);
     splitter->addWidget(aside);
-    splitter->addWidget(content);
+    splitter->addWidget(tabFrame);
 
-    content->setLayout(mainLayout);
-
-    mainLayout->setContentsMargins(0, 0, 0, 0);
-    mainLayout->setSpacing(0);
-    mainLayout->addWidget(toolBar);
-    mainLayout->addWidget(tabFrame);
+//    content->setLayout(mainLayout);
+//    mainLayout->setContentsMargins(0, 0, 0, 0);
+//    mainLayout->setSpacing(0);
 
 //    aside->setHidden(isShow);
     menuBar->setSidePanelStat(!aside->isHidden());
@@ -91,6 +87,5 @@ MainWindow::~MainWindow()
     delete menuBar;
     delete aside;
     delete statusBar;
-    delete mainLayout;
     delete content;
 }

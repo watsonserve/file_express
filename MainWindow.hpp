@@ -20,7 +20,6 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-    QVBoxLayout *mainLayout;
     MenuBar *menuBar;
     QSplitter *splitter;
     ToolBar *toolBar;

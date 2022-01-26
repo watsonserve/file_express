@@ -24,6 +24,7 @@ DirList::DirList(QWidget *parent) : QColumnView(parent)
     setTextElideMode(Qt::TextElideMode::ElideMiddle);
 
     itemSelectionModel = selectionModel();
+    printf("selectModel: %lX\n", (int64_t)itemSelectionModel);
     QString home = QDir::homePath();
     QModelIndex homeDirIdx = dirModel->index(home);
     dirModel->setRootPath(home);
@@ -45,7 +46,7 @@ DirList::DirList(QWidget *parent) : QColumnView(parent)
 //    void currentRowChanged   (const QModelIndex &current, const QModelIndex &previous);
 //    void currentColumnChanged(const QModelIndex &current, const QModelIndex &previous);
     connect(itemSelectionModel, SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this, SLOT(handleSelection(const QItemSelection &, const QItemSelection &)));
-//    connect(itemSelectionModel, SIGNAL(currentColumnChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(handleChange(const QModelIndex &, const QModelIndex &)));
+    connect(itemSelectionModel, SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(handleChange(const QModelIndex &, const QModelIndex &)));
 }
 
 bool DirList::event(QEvent *ev)
@@ -95,6 +96,13 @@ void DirList::handleSelection(const QItemSelection &selected, const QItemSelecti
         std::cout << subs[i] << " ";
     }
     std::cout << std::endl;
+}
+
+void DirList::handleChange(const QModelIndex &curr, const QModelIndex &prev)
+{
+    std::string currFile = dirModel->filePath(curr).toStdString();
+    std::string prevFile = dirModel->filePath(prev).toStdString();
+    std::cout << "currChange: " << currFile << " " << prevFile << std::endl;
 }
 
 void DirList::open(QModelIndex idx)
